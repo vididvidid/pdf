@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+</head>
+<body>
+    <h2>Polls</h2>
+    <% if (currentUser) { %>
+        <p>Welcome, <%= currentUser.username %>! <a href="/logout">Logout</a></p>
+    <% } else { %>
+        <p><a href="/login">Login</a> | <a href="/register">Register</a></p>
+    <% } %>
+
+    <h3>Create a Poll:</h3>
+    <p><a href="/create">Click here to create a new poll</a></p>
+
+    <h3>All Polls:</h3>
+    <% if (polls.length === 0) { %>
+        <p>No polls available.</p>
+    <% } else { %>
+        <ul>
+            <% polls.forEach(poll => { %>
+                <li>
+                    <a href="/poll/<%= poll._id %>"><%= poll.title %></a> - Created by <%= poll.createdBy.username %>
+                </li>
+            <% }); %>
+        </ul>
+    <% } %>
+</body>
+</html>

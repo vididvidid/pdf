@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Poll Details</title>
+</head>
+<body>
+    <h2><%= poll.title %></h2>
+    <p>Created by: <%= poll.createdBy.username %></p>
+
+    <h3>Options:</h3>
+    <% if (alreadyVoted) { %>
+        <p>You have already voted. Here are the results:</p>
+        <ul>
+            <% poll.options.forEach((option, index) => { %>
+                <li><%= option.text %>: <%= option.votes %> votes</li>
+            <% }); %>
+        </ul>
+    <% } else { %>
+        <form action="/poll/<%= poll._id %>/vote" method="POST">
+            <% poll.options.forEach((option, index) => { %>
+                <input type="radio" name="option" value="<%= index %>" required>
+                <label for="option"><%= option.text %></label><br>
+            <% }); %>
+            <button type="submit">Vote</button>
+        </form>
+    <% } %>
+
+    <p><a href="/">Back to all polls</a></p>
+</body>
+</html>
