@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html><body>
+  <h2>Welcome, <%= user.username %></h2>
+  <a href="/logout">Logout</a>
+  <h3>Your Movies</h3>
+
+  <div style="display: flex; gap: 40px;">
+    <!-- Movie Add Form -->
+    <div>
+      <form action="/api/movies" method="POST">
+        <input type="text" name="title" placeholder="Title" required />
+        <input type="text" name="genre" placeholder="Genre" required />
+        <input type="number" name="year" placeholder="Year" required />
+        <select name="watched">
+          <option value="false">Unwatched</option>
+          <option value="true">Watched</option>
+        </select>
+        <button type="submit">Add Movie</button>
+      </form>
+    </div>
+
+    <!-- Filter/Search Form -->
+    <div>
+      <form action="/movies" method="GET">
+        <input type="text" name="genre" placeholder="Filter by Genre" />
+        <select name="watched">
+          <option value="">All</option>
+          <option value="true">Watched</option>
+          <option value="false">Unwatched</option>
+        </select>
+        <button type="submit">Search</button>
+      </form>
+    </div>
+  </div>
+
+  <ul>
+    <% movies.forEach(movie => { %>
+      <li>
+        <strong><%= movie.title %></strong> - <%= movie.genre %> - <%= movie.year %> - 
+        <%= movie.watched ? 'Watched' : 'Unwatched' %>
+        <form action="/api/movies/<%= movie._id %>?_method=DELETE" method="POST" style="display:inline">
+          <button type="submit">Delete</button>
+        </form>
+      </li>
+    <% }) %>
+  </ul>
+</body></html>
